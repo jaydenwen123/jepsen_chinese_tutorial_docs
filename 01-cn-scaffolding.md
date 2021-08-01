@@ -1,8 +1,8 @@
-# 测试脚手架
+# 1.测试脚手架
 
-在本新手教程中，我们打算为etcd编写一个测试。etcd是一个分布式共识系统。在此，我想建议各位在学习过程中能自己*亲手敲*一下代码，即便一开始还不是特别理解所有内容。如此一来既能帮你学得更快，也不会在我们开始修改更复杂函数代码时而感到茫然。
+在本新手教程中，我们打算为etcd编写一个测试。etcd是一个分布式共识系统。在此，我想建议各位在学习过程中能自己_亲手敲_一下代码，即便一开始还不是特别理解所有内容。如此一来既能帮你学得更快，也不会在我们开始修改更复杂函数代码时而感到茫然。
 
-我们首先在任意目录下创建一个新的[Leiningen](https://github.com/technomancy/leiningen)（音读['laɪnɪŋən]）项目。
+我们首先在任意目录下创建一个新的[Leiningen](https://github.com/technomancy/leiningen)（音读\['laɪnɪŋən\]）项目。
 
 ```bash
 $ lein new jepsen.etcdemo
@@ -14,12 +14,11 @@ $ ls
 CHANGELOG.md  doc/  LICENSE  project.clj  README.md  resources/  src/  test/
 ```
 
-正如任何一个新创建的[Clojure](https://zh.wikipedia.org/wiki/Clojure)（音读/ˈkloʊʒər/）项目那样，我们会得到一个空白的变更日志、一个用于建立文档的目录、一个Eclipse公共许可证副本、一个`project.clj`文件（该文件告诉`leiningen`如何构建和运行我们的代码）以及一个名为README的自述文件。`resources`目录是用于存放数据文件的地方，比如我们想进行测试的数据库的配置文件。`src`目录存放着源代码，并按照代码中命名空间的结构被组织成一系列目录和文件。`test`目录是用于存放测试代码的目录。值得一提的是，这*整个目录*就是一个“Jepsen测试”；`test`目录是沿袭大多数Clojure库的习惯生成，而在本文中，我们不会用到它。
-
+正如任何一个新创建的[Clojure](https://zh.wikipedia.org/wiki/Clojure)（音读/ˈkloʊʒər/）项目那样，我们会得到一个空白的变更日志、一个用于建立文档的目录、一个Eclipse公共许可证副本、一个`project.clj`文件（该文件告诉`leiningen`如何构建和运行我们的代码）以及一个名为README的自述文件。`resources`目录是用于存放数据文件的地方，比如我们想进行测试的数据库的配置文件。`src`目录存放着源代码，并按照代码中命名空间的结构被组织成一系列目录和文件。`test`目录是用于存放测试代码的目录。值得一提的是，这_整个目录_就是一个“Jepsen测试”；`test`目录是沿袭大多数Clojure库的习惯生成，而在本文中，我们不会用到它。
 
 我们将从编辑一个指定项目的依赖项和其他元数据的`project.clj`文件来开始。我们将增加一个`:main`命名空间，正如下面一段命令行所示。除了依赖于Clojure自身的语言库，我们还添加了Jepsen库和一个用于与etcd进行通信的Verschlimmbesserung库。
 
-```clj
+```text
 (defproject jepsen.etcdemo "0.1.0-SNAPSHOT"
   :description "A Jepsen test for etcd"
   :license {:name "Eclipse Public License"
@@ -40,7 +39,7 @@ Exception in thread "main" java.lang.Exception: Cannot find anything to run for:
 
 运行完后看到这样的数据结果并不意外，因为我们尚未写任何实质性的代码让程序去运行。在`jepsen.etcdemo`命名空间下，我们需要一个main函数来接收命令行参数并运行测试。在`src/jepsen/etcdemo.clj`文件中我们定义如下main函数：
 
-```clj
+```text
 (ns jepsen.etcdemo)
 
 (defn -main
@@ -59,7 +58,7 @@ $ lein run hi there
 
 Jepsen囊括了一些用于处理参数、运行测试、错误处理和日志记录等功能的脚手架。现在不妨引入`jepsen.cli`命名空间，简称为`cli`，然后将我们的main函数转为一个Jepsen测试运行器。
 
-```clj
+```text
 (ns jepsen.etcdemo
   (:require [jepsen.cli :as cli]
             [jepsen.tests :as tests]))
@@ -206,7 +205,7 @@ history.txt  jepsen.log  results.edn  test.fressian
 
 Jepsen还带有内置的Web浏览器，用于浏览这些结果。 让我们将其添加到我们的`main`函数中：
 
-```clj
+```text
 (defn -main
   "Handles command line arguments. Can either run a test, or a web server for
   browsing results."
@@ -238,3 +237,4 @@ Usage: lein run -- serve [OPTIONS ...]
 打开一个新的终端窗口，并在其中一直运行Web服务器。 那样我们可以看到测试结果，而无需反复启动和关闭服务器。
 
 有了这个基础之后，我们将编写代码来[设置和拆除数据库](02-cn-db.md)。
+

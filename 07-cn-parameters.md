@@ -1,7 +1,8 @@
-# 使用参数来调整
+# 7. 参数化配置
+
 我们通过在读操作的时候包含了一个`quorum`标示，让我们上一个测试能够通过。但是为了看到原始的脏读bug，我们不得不再次编辑源码，设置标示为`false`。如果我们能从命令行调整该参数，那就太好了。Jepsen提供了一些默认的命令行选项[jepsen.cli](https://github.com/jepsen-io/jepsen/blob/0.1.7/jepsen/src/jepsen/cli.clj#L52-L87)，但是我们可以通过`:opt-spec`给`cli/single-test-cmd`添加我们自己的选项。
 
-```clj
+```text
 (def cli-opts
   "Additional command line options."
     [["-q" "--quorum" "Use quorum reads, instead of reading from any primary."]])
@@ -11,7 +12,7 @@ CLI选项是一个vector集合，给定一个简短的名称，一个全名，�
 
 现在，让我们那个选项规范给传递CLI。
 
-```clj
+```text
 (defn -main
   "Handles command line arguments. Can either run a test, or a web server for
   browsing results."
@@ -22,10 +23,9 @@ CLI选项是一个vector集合，给定一个简短的名称，一个全名，�
             args)
 ```
 
-
 如果我们再次通过`lein run test -q ...`运行我们的测试,我们将在我们的测试map中看到一个新的`:quorum`选项。
 
-```clj
+```text
 10:02:42.532 [main] INFO  jepsen.cli - Test options:
  {:concurrency 10,
  :test-count 1,
@@ -38,14 +38,13 @@ Jepsen解析我们的`-q`选项，发现该选项是我们提供的，并且添�
 
 现在，让我们使用quorum选项来控制是否客户端触发法定读，在客户端的`invoke`函数执行如下：
 
-```clj
+```text
         (case (:f op)
           :read (let [value (-> conn
                                 (v/get k {:quorum? (:quorum test)})
                                 parse-long)]
                   (assoc op :type :ok, :value (independent/tuple k value)))
 ```
-
 
 让我们尝试携带`-q`和不携带 `-q` 参数执行`lein run`，然后看看能否再次观察到脏读bug。
 
@@ -61,8 +60,8 @@ clojure.lang.ExceptionInfo: throw+: {:errorCode 209, :message "Invalid field", :
 
 哈。让我们再次检查在测试map中`:quorum`的值是什么。每次jepsen开始运行时，它会被打印在日志中：
 
-```clj
-2018-02-04 09:53:24,867{GMT}	INFO	[jepsen test runner] jepsen.core: Running test:
+```text
+2018-02-04 09:53:24,867{GMT}    INFO    [jepsen test runner] jepsen.core: Running test:
  {:concurrency 10,
  :db
  #object[jepsen.etcdemo$db$reify__4946 0x15a8bbe5 "jepsen.etcdemo$db$reify__4946@15a8bbe5"],
@@ -98,7 +97,7 @@ clojure.lang.ExceptionInfo: throw+: {:errorCode 209, :message "Invalid field", :
 
 有一些简单的方式来修复这个问题。在客户端或者在 `etcd-test`中，通过使用`(boolean (:quorum test))`，我们可以强迫`nil`为`false`。或者我们可以强迫在该选项省略时，为该选项通过添加`:default false`指定一个默认值。我们将使用`boolean`在`etcd-test`。以防有人直接调用它，而不是通过CLI。
 
-```clj
+```text
 (defn etcd-test
   "Given an options map from the command line runner (e.g. :nodes, :ssh,
   :concurrency ...), constructs a test map. Special options:
@@ -135,7 +134,7 @@ Analysis invalid! (ﾉಥ益ಥ）ﾉ ┻━┻
 
 在生成器中，让我们将写死的1/10秒的延迟变成一个参数，通过每秒的速率来给定。同时将每个键的生成器上硬编码的limit也变成一个可配置的参数。
 
-```clj
+```text
 (defn etcd-test
   "Given an options map from the command line runner (e.g. :nodes, :ssh,
   :concurrency ...), constructs a test map."
@@ -176,7 +175,7 @@ Analysis invalid! (ﾉಥ益ಥ）ﾉ ┻━┻
 
 同时添加相应的命令行选项。
 
-```clj
+```text
 (def cli-opts
   "Additional command line options."
   [["-q" "--quorum" "Use quorum reads, instead of reading from any primary."]
@@ -190,7 +189,7 @@ Analysis invalid! (ﾉಥ益ಥ）ﾉ ┻━┻
     :validate [pos? "Must be a positive integer."]]])
 ```
 
-我们没必要为每个选项参数都提供一个简短的名称：我们使用`nil`来表明`--ops-per-key`没有缩写。每个标志后面的大写首字母(例如：“HZ” & "NUM")是你要传递的值的任意占位符。他们将会作为使用文档的一部分被打印。我们为这两选项都提供了`:default`，如果没有通过命令行指定，它的默认值将会被使用。对rates而言，我们希望允许一个整数，浮点数和分数，因此，我们将使用Clojure内置的`read-string`函数来解析上述三类。然后我们将校验它是一个正整数，以阻止人们传递字符串，负数，0等。
+我们没必要为每个选项参数都提供一个简短的名称：我们使用`nil`来表明`--ops-per-key`没有缩写。每个标志后面的大写首字母\(例如：“HZ” & "NUM"\)是你要传递的值的任意占位符。他们将会作为使用文档的一部分被打印。我们为这两选项都提供了`:default`，如果没有通过命令行指定，它的默认值将会被使用。对rates而言，我们希望允许一个整数，浮点数和分数，因此，我们将使用Clojure内置的`read-string`函数来解析上述三类。然后我们将校验它是一个正整数，以阻止人们传递字符串，负数，0等。
 
 现在，如果我们想运行一个稍微不那么激进的测试，我们可以执行如下命令。
 
@@ -202,4 +201,5 @@ Everything looks good! ヽ(‘ー`)ノ
 
 浏览每个键的历史记录，我们可以看到操作处理的很慢，同时每个键只有10个操作。这个测试更容易检查。然而，它也不能发现bug！这是jepsen中的固有的矛盾之处：我们必须积极地发现错误，但是验证这些激进的历史记录更加困难——甚至是不可能的事情。
 
-线性一致读检查是NP复杂度的问题；现在还没有办法能够解决。我们会设计一些更有效的检查器，但是最终，指数级的困难将使我们寸步难行。或许，我们可以验证一个*weaker(稍弱)*的属性，线性或者对数时间。让我们[添加一个commutative test](08-set.md)
+线性一致读检查是NP复杂度的问题；现在还没有办法能够解决。我们会设计一些更有效的检查器，但是最终，指数级的困难将使我们寸步难行。或许，我们可以验证一个_weaker\(稍弱\)_的属性，线性或者对数时间。让我们[添加一个commutative test](https://github.com/jaydenwen123/jepsen_chinese_tutorial_docs/tree/af6e0795691ca518356792304df274957a09fc09/08-set.md)
+
