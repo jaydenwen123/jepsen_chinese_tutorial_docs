@@ -1,6 +1,6 @@
 # 教程目录
 
-[点击此处](https://github.com/jepsen-io/jepsen/blob/main/doc/tutorial/index.md)查看原始文档
+本系列是针对jepsen官方文档的中文翻译版本，原始文档可以[点击此处](https://github.com/jepsen-io/jepsen/blob/main/doc/tutorial/index.md)查看。
 
 本教程将指引你从零开始编写一个Jepsen测试。它是Jespen提供的[训练课](https://jepsen.io/services#training)的基础知识。  
 如果你不熟悉Clojure语言，我们推荐你浏览[Clojure for the Brave and True](https://www.braveclojure.com/)和 [Clojure From the Ground Up](https://aphyr.com/posts/301-clojure-from-the-ground-up-welcome) 或其他任意可以帮助你了解Clojure的教程。
