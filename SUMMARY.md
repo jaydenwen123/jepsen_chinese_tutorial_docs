@@ -1,6 +1,6 @@
 # Table of contents
 
-* [教程\(原文链接\)](README.md)
+* [教程目录](README.md)
 * [1.测试脚手架](01-cn-scaffolding.md)
 * [2.数据库自动化](02-cn-db.md)
 * [3.编写一个客户端](03-cn-client.md)
