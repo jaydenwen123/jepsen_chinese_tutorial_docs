@@ -19,8 +19,8 @@
 <table>
   <tr>
     <td align="center"><a href="https://github.com/jaydenwen123"><img src="https://avatars.githubusercontent.com/u/38454179?v=4?s=100" width="100px;" alt=""/><br /><sub><b>jaydenwen123</b></sub></a></td>
-    <td align="center"><a href="https://github.com/spencersong123"><img src="https://avatars.githubusercontent.com/u/38454179?v=4?s=100" width="100px;" alt=""/><br /><sub><b>spencersong123</b></sub></a></td>
-    <td align="center"><a href="https://github.com/Ichliebedich0505"><img src="https://avatars.githubusercontent.com/u/38454179?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ichliebedich0505</b></sub></a></td>
+    <td align="center"><a href="https://github.com/spencersong123"><img src="https://avatars.githubusercontent.com/u/24241577?v=4?s=100" width="100px;" alt=""/><br /><sub><b>spencersong123</b></sub></a></td>
+    <td align="center"><a href="https://github.com/Ichliebedich0505"><img src="https://avatars.githubusercontent.com/u/34001982?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ichliebedich0505</b></sub></a></td>
   </tr>
 </table>
 
