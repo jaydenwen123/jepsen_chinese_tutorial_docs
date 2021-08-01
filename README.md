@@ -12,3 +12,29 @@
 6. [完善测试](https://github.com/jaydenwen123/jepsen/blob/main/doc/cn_tutorial/06-cn-refining.md)  
 7. [使用参数来调整](https://github.com/jaydenwen123/jepsen/blob/main/doc/cn_tutorial/07-cn-parameters.md)  
 8. [添加一个Set测试](https://github.com/jaydenwen123/jepsen/blob/main/doc/cn_tutorial/08-cn-set.md)  
+
+
+**文档翻译贡献者**
+
+<table>
+  <tr>
+    td align="center"><a href="https://github.com/jaydenwen123"><img src="https://avatars.githubusercontent.com/u/38454179?v=4?s=100" width="100px;" alt=""/><br /><sub><b>jaydenwen123</b></sub></a></td>
+    td align="center"><a href="https://github.com/spencersong123"><img src="https://avatars.githubusercontent.com/u/38454179?v=4?s=100" width="100px;" alt=""/><br /><sub><b>jaydenwen123</b></sub></a></td>
+    td align="center"><a href="https://github.com/Ichliebedich0505"><img src="https://avatars.githubusercontent.com/u/38454179?v=4?s=100" width="100px;" alt=""/><br /><sub><b>jaydenwen123</b></sub></a></td>
+  </tr>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
